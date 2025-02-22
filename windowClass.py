@@ -9,3 +9,6 @@ class Window:
         self.canvas = Canvas()
         self.canvas.pack()
         self.running = False
+    def redraw(self):
+        self.__root.update_idletasks()
+        self.__root.update()
