@@ -1,8 +1,9 @@
-from windowClass import Window
+from windowClass import *
 
-def main():
-    win = Window(800, 600)
-    win.wait_for_close()
-
+if __name__ == "__main__":
+    def main():
+        win = Window(800, 600)
+        Window.draw_line(Line(Point(5,5), Point(250,250)))
+        win.wait_for_close()
 
 main()

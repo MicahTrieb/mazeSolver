@@ -1,4 +1,5 @@
 from tkinter import Tk, BOTH, Canvas
+from pointClass import Point, Line
 
 class Window:
     def __init__(self, width, height):
@@ -15,7 +16,10 @@ class Window:
     def wait_for_close(self):
         self.__running = True
         while self.__running == True:
-            self.redraw
+            self.redraw()
         print("Closed")
     def close(self):
         self.__running = False
+
+    def draw_line(self, Line, color):
+        self.draw(Line,color, self.__canvas)
