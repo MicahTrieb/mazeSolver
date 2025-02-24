@@ -1,5 +1,4 @@
 from tkinter import Tk, BOTH, Canvas
-from pointClass import Point, Line
 
 class Window:
     def __init__(self, width, height):
@@ -23,6 +22,9 @@ class Window:
 
     def draw_line(self, line, color):
         line.draw(color, self.__canvas)
+    def draw_cell(self, cell, color):
+        cell.draw(self.__canvas, color)
+        
 
 class Point:
     def __init__(self, x, y):
@@ -40,9 +42,27 @@ class Line:
         )
 
 class Cell:
-    def __init__(self, x, y):
-        self.leftWall = True
-        self.rightWall = True
-        self.topWall = True
-        self.bottomWall = True
-        self._x1 =
+    def __init__(self, win, x1, x2, y1, y2, leftWall = True, rightWall = True, topWall = True, bottomWall = True):
+        self.leftWall = leftWall
+        self.rightWall = rightWall
+        self.topWall = topWall
+        self.bottomWall = bottomWall
+        self._x1 = x1
+        self._x2 = x2
+        self._y1 = y1
+        self._y2 = y2
+        self._win = win
+    def draw(self, canvas, color):
+        topLeft = Point(self._x1, self._y1)
+        topRight = Point(self._x2, self._y1)
+        bottomLeft = Point(self._x1, self._y2)
+        bottomRight = Point(self._x2, self._y2)
+        if self.leftWall:
+            Line(topLeft, bottomLeft).draw(color, canvas)
+        if self.rightWall:
+            Line(topRight, bottomRight).draw(color, canvas)
+        if self.topWall:
+            Line(topLeft, topRight).draw(color, canvas)
+        if self.bottomWall:
+            Line(bottomLeft, bottomRight).draw(color, canvas)
+        pass
