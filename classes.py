@@ -24,8 +24,8 @@ class Window:
         line.draw(color, self.__canvas)
     def draw_cell(self, cell, color):
         cell.draw(self.__canvas, color)
-        
-
+    def move_cell(self, cellOne, cellTwo):
+        cellOne.draw_move(cellTwo, self.__canvas)
 class Point:
     def __init__(self, x, y):
         self.x = x
@@ -66,3 +66,14 @@ class Cell:
         if self.bottomWall:
             Line(bottomLeft, bottomRight).draw(color, canvas)
         pass
+    def draw_move(self, to_cell, canvas, undo=False):
+        centerOfFirstX = (self._x1 + self._x2) / 2
+        centerOfFirstY = (self._y1 + self._y2) / 2
+        centerOfSecondX = (to_cell._x1 + to_cell._x2) / 2
+        centerOfSecondY = (to_cell._y1 + to_cell._y2) / 2
+        centerOfFirst = Point(centerOfFirstX, centerOfFirstY)
+        centerOfSecond = Point(centerOfSecondX, centerOfSecondY)
+        if undo == False:
+            Line(centerOfFirst,centerOfSecond).draw("red", canvas)
+        else:
+            Line(centerOfFirst,centerOfSecond).draw("gray", canvas)
