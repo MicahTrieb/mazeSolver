@@ -1,4 +1,4 @@
-from windowClasses import *
+from windowClasses import Point, Window, Line
 
 class Cell:
     def __init__(self, x1, x2, y1, y2, win=None, leftWall = True, rightWall = True, topWall = True, bottomWall = True):

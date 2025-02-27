@@ -1,5 +1,4 @@
 from tkinter import Tk, BOTH, Canvas
-from cellClass import *
 
 class Window:
     def __init__(self, width, height):
