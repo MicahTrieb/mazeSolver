@@ -65,7 +65,6 @@ class Cell:
             Line(topLeft, topRight).draw(color, canvas)
         if self.bottomWall:
             Line(bottomLeft, bottomRight).draw(color, canvas)
-        pass
     def draw_move(self, to_cell, canvas, undo=False):
         centerOfFirstX = (self._x1 + self._x2) / 2
         centerOfFirstY = (self._y1 + self._y2) / 2

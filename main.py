@@ -1,15 +1,13 @@
 from classes import *
-
+from mazeClass import Maze
 if __name__ == "__main__":
     def main():
         win = Window(800, 600)
-        #win.draw_line(Line(Point(5,5), Point(250,250)), "black")
-        #(self, x1, x2, y1, y2, win, leftWall = True, rightWall = True, topWall = True, bottomWall = True):
-        tempCell = Cell(win, 10, 120, 10, 120, True, True, False, True)
-        tempCell2 = Cell(win, 250, 500, 250, 500, True, True, False, True)
-        win.draw_cell(tempCell, "blue")
-        win.draw_cell(tempCell2, "purple")
-        win.move_cell(tempCell, tempCell2)
+        num_cols = 12
+        num_rows = 10
+        m1 = Maze(0, 0, num_rows, num_cols, 10, 10, win)
+        m1._create_cells
+        
         win.wait_for_close()
 
 main()
