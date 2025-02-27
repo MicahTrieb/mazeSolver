@@ -1,4 +1,5 @@
 from tkinter import Tk, BOTH, Canvas
+from cellClass import *
 
 class Window:
     def __init__(self, width, height):
@@ -19,8 +20,9 @@ class Window:
             self.redraw()
     def close(self):
         self._running = False
-    def draw(self, line, color):
+    def draw_line(self, line, color):
         Line.draw(line, self._canvas, color)
+
 
 class Point:
     def __init__(self, x=0, y=0):
