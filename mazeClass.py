@@ -21,17 +21,20 @@ class Maze:
         self._cells = []
         
     def _create_cells(self):
-        for col in range(self._num_cols):
-            for row in range(self._num_rows):
-                self._draw_cell(row, col)
+        for i in range(self._num_cols):
+            col_cells = []
+            for j in range(self._num_rows):
+                col_cells.append(Cell(self._win))
+            self._cells.append(col_cells)
+        for i in range(self._num_cols):
+            for j in range(self._num_rows):
+                self._draw_cell(i, j)
     def _draw_cell(self, row, col):
-        print("Drawing")
-        topLeft = Point(row * self._cell_size_x,col * self._cell_size_y)
-        topRight = Point((row + 1) * self._cell_size_x,col * self._cell_size_y)
-        botLeft = Point(row * self._cell_size_x,(col + 1) * self._cell_size_y)
-        botRight = Point((row + 1) * self._cell_size_x,(col + 1) * self._cell_size_y)
-        fullCell = Cell(self._win, topLeft, topRight, botLeft, botRight)
-        fullCell.draw(self._win.__canvas, "pink")
+        x1 = self._x1 + col * self._cell_size_x
+        y1 = self._y1 + row * self._cell_size_y
+        x2 = x1 + self._cell_size_x
+        y2 = y1 + self._cell_size_y
+        self._cells[col][row].draw(x1, y1, x2, y2)
         self._animate()
     def _animate(self):
         self.redraw()
