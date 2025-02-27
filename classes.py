@@ -52,20 +52,20 @@ class Cell:
         self._y1 = y1
         self._y2 = y2
         self._win = win
-    def draw(self, canvas, color):
+    def draw(self, color):
         topLeft = Point(self._x1, self._y1)
         topRight = Point(self._x2, self._y1)
         bottomLeft = Point(self._x1, self._y2)
         bottomRight = Point(self._x2, self._y2)
         if self.leftWall:
-            Line(topLeft, bottomLeft).draw(color, canvas)
+            self._win.draw_line(Line(topLeft, bottomLeft))
         if self.rightWall:
-            Line(topRight, bottomRight).draw(color, canvas)
+            self._win.draw_line(Line(topRight, bottomRight))
         if self.topWall:
-            Line(topLeft, topRight).draw(color, canvas)
+            self._win.draw_line(Line(topLeft, topRight))
         if self.bottomWall:
-            Line(bottomLeft, bottomRight).draw(color, canvas)
-    def draw_move(self, to_cell, canvas, undo=False):
+            self._win.draw_line(Line(bottomLeft, bottomRight))
+    def draw_move(self, to_cell, undo=False):
         centerOfFirstX = (self._x1 + self._x2) / 2
         centerOfFirstY = (self._y1 + self._y2) / 2
         centerOfSecondX = (to_cell._x1 + to_cell._x2) / 2
@@ -73,6 +73,6 @@ class Cell:
         centerOfFirst = Point(centerOfFirstX, centerOfFirstY)
         centerOfSecond = Point(centerOfSecondX, centerOfSecondY)
         if undo == False:
-            Line(centerOfFirst,centerOfSecond).draw("red", canvas)
+            Line(centerOfFirst,centerOfSecond).draw("red", self._win.__canvas)
         else:
-            Line(centerOfFirst,centerOfSecond).draw("gray", canvas)
+            Line(centerOfFirst,centerOfSecond).draw("gray", self._win.__canvas)
