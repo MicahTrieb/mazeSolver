@@ -45,5 +45,7 @@ class Maze:
         secondIndex.bottomWall = False
         secondIndex.draw(secondIndex.x1, secondIndex.y1, secondIndex.x2, secondIndex.y2, self.win._canvas, "white")
 
-    def _wall_smasher(self, i, j):
+    def _wall_smasher(self):
         
+    def _wall_smasher_r(self, i, j):
+        pass
