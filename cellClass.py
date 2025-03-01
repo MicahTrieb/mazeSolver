@@ -13,6 +13,8 @@ class Cell:
         self.topWall = topWall
 
     def draw(self, x1, y1, x2, y2, canvas, color):
+        if self.win == None:
+            return
         topLeft = Point(x1, y1)
         topRight = Point(x2, y1)
         bottomLeft = Point(x1, y2)
@@ -31,20 +33,13 @@ class Cell:
             line.draw(canvas, color)
 
     def draw_move(self, to_cell, undo=False):
+        middleX = (self.x1 - self.x2) / 2
+        middleY = (self.y1 - self.y2) / 2
+        middleX2 = (to_cell.x1 - to_cell.x2) / 2
+        middleY2 = (to_cell.y1 - to_cell.y2) / 2
+        firstPoint, secondPoint = Point(middleX, middleY), Point(middleX2, middleY2)
+        line = Line(firstPoint, secondPoint)
+        color = "red"
         if undo:
-            middleX = (abs(self.x1 - self.x2)) / 2
-            middleY = (abs(self.y1 - self.y2)) / 2
-            middleX2 = (abs(to_cell.x1 - to_cell.x2)) / 2
-            middleY2 = (abs(to_cell.y1 - to_cell.y2)) / 2
-            firstPoint, secondPoint = Point(middleX, middleY), Point(middleX2, middleY2)
-            line = Line(firstPoint, secondPoint)
-            line.draw(self.win._canvas, "red")
-        else:
-            middleX = (abs(self.x1 + self.x2)) / 2
-            middleY = (abs(self.y1 + self.y2)) / 2
-            middleX2 = (abs(to_cell.x1 + to_cell.x2)) / 2
-            middleY2 = (abs(to_cell.y1 + to_cell.y2)) / 2
-            firstPoint, secondPoint = Point(middleX, middleY), Point(middleX2, middleY2)
-            line = Line(firstPoint, secondPoint)
-            line.draw(self.win._canvas, "gray")
-        
+            color = "gray"
+        line.draw(self.win._canvas, color)
