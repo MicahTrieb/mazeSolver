@@ -1,5 +1,6 @@
 from windowClasses import *
 from cellClass import *
+import random
 import time
 class Maze:
     def __init__(self,rows, cols, xSize, ySize, x1=0, y1=0, win=None, seed=None):
@@ -11,10 +12,11 @@ class Maze:
         self.ySize = ySize
         self.win = win
         self.list = []
-        self.seed = seed
+        random.seed(seed)
 
         self._create_cells()
         self._break_entrance_and_exit()
+        self._wall_smasher()
     def _create_cells(self):
         for i in range(self.cols):
             self.list.append([])
@@ -44,8 +46,10 @@ class Maze:
         secondIndex = self.list[self.cols - 1][self.rows - 1]
         secondIndex.bottomWall = False
         secondIndex.draw(secondIndex.x1, secondIndex.y1, secondIndex.x2, secondIndex.y2, self.win._canvas, "white")
-
-    def _wall_smasher(self):
-        
     def _wall_smasher_r(self, i, j):
-        pass
+        newList = []
+        newList2 = []
+        while True:
+            
+        #[0][0], [0]+1[0] = 1 down
+        

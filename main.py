@@ -4,13 +4,12 @@ from mazeClass import Maze
 import time
 import random
 def main():
-    getSeed = random.seed()
-    getSeed.getstate()
-    #window = Window(800,600)
-    #window.draw_line(Line(Point(5,5),Point(250,250)), "pink")
-    #Maze(10, 10, 50, 50, 100, 100, window)
-    #newMaze._create_cells()
-    #window.wait_for_close() 
+    random.seed(None)
+    print (random.randint(1,2))
+    window = Window(800,600)
+    #window.draw_line(Line(Point(5,5),Point(250,250)), "black")
+    Maze(10, 10, 50, 50, 100, 100, window)
+    window.wait_for_close()
 
 
 
