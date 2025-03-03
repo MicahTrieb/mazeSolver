@@ -11,6 +11,7 @@ class Cell:
         self.rightWall = rightWall
         self.bottomWall = bottomWall
         self.topWall = topWall
+        self.visited = False
 
     def draw(self, x1, y1, x2, y2, canvas, color):
         if self.win == None:

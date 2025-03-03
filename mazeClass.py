@@ -16,7 +16,7 @@ class Maze:
 
         self._create_cells()
         self._break_entrance_and_exit()
-        self._wall_smasher()
+        self._wall_smasher_r(0, 0)
     def _create_cells(self):
         for i in range(self.cols):
             self.list.append([])
@@ -47,9 +47,30 @@ class Maze:
         secondIndex.bottomWall = False
         secondIndex.draw(secondIndex.x1, secondIndex.y1, secondIndex.x2, secondIndex.y2, self.win._canvas, "white")
     def _wall_smasher_r(self, i, j):
-        newList = []
-        newList2 = []
-        while True:
-            
+        toBeVisited = []
+        emptyList = []
+        currentIndex = self.list[i][j]
+        if (i + 1) <= self.rows:
+            if self.list[i + 1][j].visited == False:
+                toBeVisited.append(self.list[i + 1][j])
+                #down
+                pass
+        if (j + 1) <= self.cols:
+            if self.list[i][j+1].visited == False:
+                toBeVisited.append(self.list[i][j+1])
+                #right
+        if (i - 1) >= 0:    
+            if self.list[i - 1][j].visited == False:
+                toBeVisited.append(self.list[i - 1][j])
+                #up
+        if (j - 1) >= 0:
+            if self.list[i][j - 1].visited == False:
+                toBeVisited.append(self.list[i][j - 1])
+                #Left
+        if not toBeVisited:
+            return
+        nextCell = toBeVisited[random.randint(0,3)]
+
+
         #[0][0], [0]+1[0] = 1 down
         
