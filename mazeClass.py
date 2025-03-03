@@ -31,46 +31,84 @@ class Maze:
         bottomLeft = self._x1 + (i * self.xSize)
         bottomRight = self._y1 + ((j + 1) * self.ySize)
         newCell = Cell(topLeft, topRight, bottomLeft, bottomRight, self.win)
-        self.list[i].extend([newCell])
+        self.list[i].append(newCell)
         newCell.draw(newCell.x1, newCell.y1, newCell.x2, newCell.y2, self.win._canvas, "black")
-        self._animate()
+        self._animate(0)
 
-    def _animate(self):
+    def _animate(self, delay):
         self.win.redraw()
-        time.sleep(0.05)
+        time.sleep(delay)
 
     def _break_entrance_and_exit(self):
         firstIndex = self.list[0][0]
-        firstIndex.topWall = False
-        firstIndex.draw(firstIndex.x1, firstIndex.y1, firstIndex.x2, firstIndex.y2, self.win._canvas, "white")
+        Line.draw(Line(Point(firstIndex.x1, firstIndex.y1),Point(firstIndex.x1, firstIndex.y2)), self.win._canvas, "white")
         secondIndex = self.list[self.cols - 1][self.rows - 1]
-        secondIndex.bottomWall = False
-        secondIndex.draw(secondIndex.x1, secondIndex.y1, secondIndex.x2, secondIndex.y2, self.win._canvas, "white")
+        Line.draw(Line(Point(secondIndex.x1, secondIndex.y2),Point(secondIndex.x2, secondIndex.y1)), self.win._canvas, "white")
     def _wall_smasher_r(self, i, j):
-        toBeVisited = []
-        emptyList = []
-        currentIndex = self.list[i][j]
-        if (i + 1) <= self.rows:
-            if self.list[i + 1][j].visited == False:
-                toBeVisited.append(self.list[i + 1][j])
-                #down
-                pass
-        if (j + 1) <= self.cols:
-            if self.list[i][j+1].visited == False:
-                toBeVisited.append(self.list[i][j+1])
-                #right
-        if (i - 1) >= 0:    
-            if self.list[i - 1][j].visited == False:
-                toBeVisited.append(self.list[i - 1][j])
-                #up
-        if (j - 1) >= 0:
-            if self.list[i][j - 1].visited == False:
-                toBeVisited.append(self.list[i][j - 1])
-                #Left
-        if not toBeVisited:
+            self._animate(0.05)
+            currentIndex = self.list[i][j]
+            currentIndex.visited = True
+            toBeVisited = []
+            while currentIndex.visited == True:
+                if (i + 1) < self.rows:
+                    if self.list[i + 1][j].visited == False:
+                        toBeVisited.append((self.list[i + 1][j],i + 1, j, 1))
+                        #down
+                if (j + 1) < self.cols:
+                    if self.list[i][j+1].visited == False:
+                        toBeVisited.append((self.list[i][j+1],i, j + 1, 2))
+                        #right
+                if (i - 1) > 0:    
+                    if self.list[i - 1][j].visited == False:
+                        toBeVisited.append((self.list[i - 1][j],i - 1, j, 3))
+                        #up
+                if (j - 1) > 0:
+                    if self.list[i][j - 1].visited == False:
+                        toBeVisited.append((self.list[i][j - 1],i, j - 1, 4))
+                        #Left
+                if toBeVisited == []:
+                    currentIndex.draw(currentIndex.x1, currentIndex.y1, currentIndex.x2, currentIndex.y2, self.win._canvas, "black")
+                    return
+                nextNode = toBeVisited[random.randint(0,len(toBeVisited) - 1)]
+                if nextNode == self.list[self.cols - 1][self.rows - 1]:
+                    return
+                if nextNode[3] == 1:
+                    currentIndex.bottomWall = False
+                    Line.draw(Line(Point(currentIndex.x1,currentIndex.y2),Point(currentIndex.x2, currentIndex.y2)), self.win._canvas, "white")
+                    #currentIndex.draw(currentIndex.x1, currentIndex.y1, currentIndex.x2, currentIndex.y2, self.win._canvas, "black")
+                if nextNode[3] == 2:
+                    currentIndex.rightWall = False
+                    Line.draw(Line(Point(currentIndex.x2,currentIndex.y1),Point(currentIndex.x2, currentIndex.y2)), self.win._canvas, "white")
+                    #currentIndex.draw(currentIndex.x1, currentIndex.y1, currentIndex.x2, currentIndex.y2, self.win._canvas, "black")
+                if nextNode[3] == 3:
+                    currentIndex.topWall = False
+                    Line.draw(Line(Point(currentIndex.x1,currentIndex.y1),Point(currentIndex.x2, currentIndex.y1)), self.win._canvas, "white")
+                    #currentIndex.draw(currentIndex.x1, currentIndex.y1, currentIndex.x2, currentIndex.y2, self.win._canvas, "black")
+                if nextNode[3] == 4:
+                    currentIndex.leftWall = False
+                    Line.draw(Line(Point(currentIndex.x1,currentIndex.y1),Point(currentIndex.x1, currentIndex.y2)), self.win._canvas, "white")
+                    #currentIndex.draw(currentIndex.x1, currentIndex.y1, currentIndex.x2, currentIndex.y2, self.win._canvas, "black")
+                self._wall_smasher_r(nextNode[1], nextNode[2])
+
+'''        if not toBeVisited:
             return
-        nextCell = toBeVisited[random.randint(0,3)]
-
-
-        #[0][0], [0]+1[0] = 1 down
+        randomValue = random.randint(0, len(toBeVisited) - 1)
+        nextCell = (toBeVisited.pop(randomValue))
+        nextCell[0].visited = True
+        if nextCell[0] == self.list[self.cols-1][self.rows - 1]:
+            return
+        if nextCell[3] == 1:
+            nextCell[0].bottomWall = False
+            nextCell[0].draw(nextCell[0].x1, nextCell[0].y1, nextCell[0].x2, nextCell[0].y2, self.win._canvas, "red")
+        if nextCell[3] == 2:
+            nextCell[0].rightWall = False
+            nextCell[0].draw(nextCell[0].x1, nextCell[0].y1, nextCell[0].x2, nextCell[0].y2, self.win._canvas, "red")
+        if nextCell[3] == 3:
+            nextCell[0].topWall = False
+            nextCell[0].draw(nextCell[0].x1, nextCell[0].y1, nextCell[0].x2, nextCell[0].y2, self.win._canvas, "red")
+        if nextCell[3] == 4:
+            nextCell[0].leftWall = False
+            nextCell[0].draw(nextCell[0].x1, nextCell[0].y1, nextCell[0].x2, nextCell[0].y2, self.win._canvas, "red")
+        self._wall_smasher_r(nextCell[1], nextCell[2])
+'''
         
